@@ -1,183 +1,143 @@
-⸻
+# tmux-config
 
-📦 tmux Configuration
+Tokyo Night × WezTerm 专用 **tmux 配置**  
+适合 macOS、WezTerm、Nerd Font、SSH 多主机 + 高效终端工作流
 
-Tokyo Night inspired tmux setup optimized for:
-	•	macOS
-	•	WezTerm
-	•	Nerd Font
-	•	SSH-heavy workflow
-	•	Nix / multi-machine environment
+---
 
-⸻
+## 📌 特色
 
-✨ Features
-	•	Ctrl+a as prefix
-	•	Mouse support enabled
-	•	256-color terminal support
-	•	Top status bar
-	•	Strong active pane highlight
-	•	Dim inactive panes
-	•	Modern window labels
-	•	Vim-style pane navigation
-	•	Session persistence via TPM plugins
+- `Ctrl+a` 作为 tmux 前缀
+- 顶部状态栏（清晰分段）
+- 强对比当前 Pane 高亮
+- Dim 弱化非活动 Pane
+- Vim 风格 Pane 导航
+- 多 Host / 多 Session 友好
+- 自动 Session 保存 & 恢复
+- 优雅的窗口标签样式
 
-⸻
+---
 
-🎨 Visual Design
-
-Designed for Tokyo Night × WezTerm.
-	•	Status bar at top
-	•	Active pane with high-contrast border
-	•	Inactive panes slightly dimmed
-	•	Clean block-style window labels
-	•	User + host display (SSH-friendly)
-
-⸻
-
-📁 File Structure
+## 📁 结构说明
 
 ~/.config/tmux/tmux.conf
-~/.tmux.conf   # minimal bridge file
-~/.tmux/plugins/tpm
+~/.tmux.conf                ← bridge
+~/.tmux/plugins/tpm         ← 插件管理
 
-Bridge file (~/.tmux.conf):
+> `~/.tmux.conf` 只用于 bridge 加载主配置。
 
+Bridge 文件示例：
+
+```tmux
 source-file "$HOME/.config/tmux/tmux.conf"
 
 
 ⸻
 
-🔧 Installation
+🛠 安装说明
 
-1️⃣ Install TPM
+1) 克隆仓库
 
+git clone https://github.com/linwh1te/tmux.git ~/.config/tmux
+
+
+⸻
+
+2) 安装 TPM 插件管理器
+
+rm -rf ~/.tmux/plugins/tpm
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 chmod +x ~/.tmux/plugins/tpm/tpm
 
-2️⃣ Restart tmux
+
+⸻
+
+3) 重启 tmux
 
 tmux kill-server
 tmux
 
-3️⃣ Install plugins
 
-Inside tmux:
+⸻
+
+4) 安装插件
+
+在 tmux 里按：
 
 Ctrl+a I
 
 
 ⸻
 
-⌨️ Keybindings
+🚀 使用指南
 
-Prefix
+✔ 分屏
 
-Ctrl+a
+左右分屏：
 
+Ctrl+a |
 
-⸻
+上下分屏：
 
-Splits
+Ctrl+a -
 
-Action	Key
-Vertical split	`Ctrl+a
-Horizontal split	Ctrl+a -
-Compatible default	Ctrl+a % / Ctrl+a "
+兼容默认：
 
-
-⸻
-
-Pane Navigation (no prefix)
-
-Ctrl+h
-Ctrl+j
-Ctrl+k
-Ctrl+l
+Ctrl+a %
+Ctrl+a "
 
 
 ⸻
 
-Reload Config
+✔ Pane 切换（无需前缀）
+
+Ctrl+h  ←
+Ctrl+j  ↓
+Ctrl+k  ↑
+Ctrl+l  →
+
+
+⸻
+
+✔ 重载配置
 
 Ctrl+a r
 
 
 ⸻
 
-Save / Restore Session
+✔ 保存 & 恢复 Session
 
-Action	Key
-Save session	Ctrl+a Ctrl+s
-Restore	Ctrl+a Ctrl+r
-
-
-⸻
-
-🧠 Workflow Philosophy
-
-One machine = one session.
-
-Example:
-
-tank
-m16
-gpd
-
-Each session layout:
-
-Window	Purpose
-1	nvim
-2	build
-3	logs
-4	system
-
-Never close tmux.
-Detach instead.
-
-Ctrl+a d
+Ctrl+a Ctrl+s   ← 保存
+Ctrl+a Ctrl+r   ← 恢复
 
 
 ⸻
 
-🖥 Recommended Terminal
+🧠 推荐工作流
 
-Tested with:
-	•	WezTerm
-	•	Nerd Font enabled
-	•	Tokyo Night theme
+每台主机一个 Session：
 
-Suggested WezTerm settings:
+Host	Session	常规窗口
+tank	tank	nvim / build / logs / sys
+gpd	gpd	…
+m16	m16	…
 
-window_background_opacity = 0.92
-macos_window_background_blur = 20
-window_padding = {
-  left = 12,
-  right = 12,
-  top = 8,
-  bottom = 8,
+
+⸻
+
+📦 WezTerm 配置（建议）
+
+在 wezterm.lua 加：
+
+return {
+  window_background_opacity = 0.92,
+  macos_window_background_blur = 20,
+  window_padding = {
+    left = 12, right = 12,
+    top = 8, bottom = 8,
+  },
+  window_frame = {
+    corner_radius = 12,
+  },
 }
-
-
-⸻
-
-📌 Notes
-	•	Plugins are runtime dependencies, not version-controlled.
-	•	plugins/ directory should not be committed.
-	•	Designed for multi-machine consistency.
-	•	Compatible with Home Manager / Nix.
-
-⸻
-
-🚀 Future Improvements
-	•	Optional git branch in status bar
-	•	Battery indicator (macOS)
-	•	CPU load indicator
-	•	SSH host color auto-detection
-	•	Floating pane support
-
-⸻
-
-If you use Nix, consider generating the config declaratively.
-
-⸻
